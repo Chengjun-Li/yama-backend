@@ -1,25 +1,34 @@
 package team.yama.yama.domain;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Data
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class User {
-    private @Id
+    @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    Long id;
+    private Long id;
+
+    @NotBlank
+    @Column(unique = true)
     private String email;
+
+    @NotBlank
     private String password;
+
+    @NotNull
     private UserType userType;
+
     private String firstName;
     private String lastName;
 }
