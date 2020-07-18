@@ -12,6 +12,7 @@ import static org.springframework.http.ResponseEntity.notFound;
 @Slf4j
 public class RestExceptionHandler {
 
+    @SuppressWarnings("rawtypes")
     @ExceptionHandler(value = {UserNotFoundException.class})
     public ResponseEntity userNotFound(UserNotFoundException ex, WebRequest request) {
         log.debug("handling VehicleNotFoundException...");

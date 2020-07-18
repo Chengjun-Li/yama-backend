@@ -16,32 +16,33 @@ public class UserController {
         this.userRepository = userRepository;
     }
 
-    @GetMapping("/users/{id}")
-    ResponseEntity<User> get(@PathVariable Long id) {
-        return ok(userRepository.findById(id).orElseThrow(() -> new UserNotFoundException(id)));
+    @GetMapping("/users/{username}")
+    ResponseEntity<User> get(@PathVariable String username) {
+        return ok(userRepository.findByUsername(username).orElseThrow(() -> new UserNotFoundException(username)));
     }
 
     @PostMapping("/users")
     ResponseEntity<User> save(@RequestBody User newUser) {
-        User saved = userRepository.saveAndFlush(newUser);
+        User saved = userRepository.save(newUser);
         return ok(saved);
     }
 
-    @PutMapping("/users/{id}")
-    ResponseEntity<User> update(@RequestBody User newUser, @PathVariable Long id) {
-        User existed = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException(id));
-        existed.setEmail(newUser.getEmail());
+    @PutMapping("/users/{username}")
+    ResponseEntity<User> update(@RequestBody User newUser, @PathVariable String username) {
+        User existed = userRepository.findByUsername(username).orElseThrow(() -> new UserNotFoundException(username));
+        existed.setUsername(newUser.getUsername());
         existed.setPassword(newUser.getPassword());
+        existed.setEmail(newUser.getEmail());
         existed.setUserType(newUser.getUserType());
         existed.setFirstName(newUser.getFirstName());
         existed.setLastName(newUser.getLastName());
-        User saved = userRepository.saveAndFlush(existed);
+        User saved = userRepository.save(existed);
         return ok(saved);
     }
 
-    @DeleteMapping("/users/{id}")
-    void delete(@PathVariable Long id) {
-        User existed = userRepository.findById(id).orElseThrow((() -> new UserNotFoundException(id)));
+    @DeleteMapping("/users/{username}")
+    void delete(@PathVariable String username) {
+        User existed = userRepository.findByUsername(username).orElseThrow((() -> new UserNotFoundException(username)));
         userRepository.delete(existed);
     }
 
