@@ -1,7 +1,10 @@
 package team.yama.yama.domain;
 
 public enum UserType {
-    Admin(0), Manager(1), Operator(2), Tenant(3);
+    //Employees are the workers under property management company
+    //Managers are workers under third party company
+    //Workers are employees under managers
+    Admin(0), Employee(1), Manager(2), Worker(3), Tenant(4);
 
     private final Integer code;
 
