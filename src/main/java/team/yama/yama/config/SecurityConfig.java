@@ -3,12 +3,15 @@ package team.yama.yama.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import team.yama.yama.security.jwt.JwtSecurityConfigurer;
 import team.yama.yama.security.jwt.JwtTokenProvider;
-
+@EnableWebSecurity
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
@@ -34,7 +37,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()
                 .antMatchers("/auth/login").permitAll()
-                .antMatchers("/users/**").hasRole("Admin")
+                //.antMatchers("/users/**").hasRole("Admin")
                 .anyRequest().authenticated()
         .and().apply(new JwtSecurityConfigurer(jwtTokenProvider));
     }
