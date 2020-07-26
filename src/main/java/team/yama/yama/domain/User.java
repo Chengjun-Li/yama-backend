@@ -40,6 +40,10 @@ public class User implements UserDetails {
     private String firstName;
     private String lastName;
 
+    private String unit;
+
+    private String phoneNumber;
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return Collections.singletonList(new SimpleGrantedAuthority(userType.toString()));
