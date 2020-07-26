@@ -6,6 +6,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
+import team.yama.yama.domain.User;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -20,8 +21,15 @@ public class UserInfoController {
     @GetMapping("/user")
     public ResponseEntity currentUser(@AuthenticationPrincipal UserDetails userDetails){
         Map<Object, Object> model = new HashMap<>();
-        model.put("username", userDetails.getUsername());
-        model.put("userType", userDetails.getAuthorities()
+        User user = (User) userDetails;
+        model.put("id", user.getId());
+        model.put("username", user.getUsername());
+        model.put("email", user.getEmail());
+        model.put("lastName",user.getLastName());
+        model.put("firstName", user.getFirstName());
+        model.put("unit", user.getUnit());
+        model.put("phoneNumber", user.getPhoneNumber());
+        model.put("userType", user.getAuthorities()
                 .stream()
                 .map(GrantedAuthority::getAuthority)
                 .collect(toList())
